@@ -81,7 +81,8 @@ public class ApplicantController {
 		}
 		return mav;
 	}
-
+	
+    //Show job page to add new job
 	@GetMapping("/showJobPage")
 	public ModelAndView showJobPage(@RequestParam ("id") int theId, Model theModel) {
 		ModelAndView mav = null;

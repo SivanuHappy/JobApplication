@@ -3,15 +3,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Employer profile page</title>
+<style></style>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/jobapp-style.css" />
 </head>
 <body>
-    <a href="../employer/logout">Logout</a>
-	<p>Provide your details below.</p>
+	<header>
+		<h1>Welcome to job portal</h1>
+	</header>
+	<div id="profilehead">
+		<c:url var="homepage" value="../employer/getHomePage">
+			<c:param name="empId" value="${id}" />
+			<c:param name="firstname" value="${firstname}" />
+		</c:url>
+		<a href="${homepage}">Home page</a> &nbsp; <a
+			href="../employer/logout">Logout</a>
+	</div>
+	<div id="profile">
+		<h3>Provide your details below.</h3>
+	</div>
 	<form:form action="updateProfile" modelAttribute="employer" method="POST">
-		<!--  associate data with employer id -->
-		<form:hidden path="id"/>
-		<p class="success">${successmessage}</p>
-		<p>${empmessage}</p>
+		<form:hidden path="id" />
+		<p class="success">${empmessage}</p>
 		<table>
 			<tbody>
 				<tr>
@@ -19,10 +33,11 @@
 					<td><input type="submit" value="Update Profile" class="save"></td>
 				</tr>
 				<tr>
-					<td><form:input type="hidden" path="username" value="${userName}"/></td>
+					<td><form:input type="hidden" path="username"
+							value="${userName}" /></td>
 				</tr>
 				<tr>
-					<td><form:input type="hidden" path="user.id" value="${userId}"/></td>
+					<td><form:input type="hidden" path="user.id" value="${userId}" /></td>
 				</tr>
 				<tr>
 					<td><label>First name:</label></td>
@@ -35,10 +50,12 @@
 				<tr>
 					<td><label>Email address:</label></td>
 					<td><form:input path="email" /></td>
+					<td><form:errors path="email" cssClass="error" /></td>
 				</tr>
 				<tr>
 					<td><label>Phone number:</label></td>
 					<td><form:input path="phone" /></td>
+					<td><form:errors path="phone" cssClass="error" /></td>
 				</tr>
 				<tr>
 					<td><label>Company:</label></td>

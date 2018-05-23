@@ -14,7 +14,6 @@ import com.jobapplication.validation.EmailValid;
 import com.jobapplication.validation.PhoneValid;
 
 
-@PhoneValid(message="Invalid phone number")
 @Entity
 @Table(name="applicant")
 public class Applicant {
@@ -43,6 +42,7 @@ public class Applicant {
 	private String email;
 
 	@Column(name="phone")
+	@PhoneValid(message="Invalid phone number")
 	private String phone;
 
 	@Column(name="address1")

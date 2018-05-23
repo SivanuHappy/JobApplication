@@ -26,7 +26,7 @@ public class WebServiceController {
 		return theUsers;
 	}
 	
-	@GetMapping("/getUser/{id}")
+	@GetMapping("/listUsers/getUser/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable("id") int id){
 		User theUser = userService.getUserById(id);
 		if(theUser == null){

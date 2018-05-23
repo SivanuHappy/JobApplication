@@ -3,21 +3,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>
+Applicant profile page</title>
 <style>
-p.invisible {visibility:hidden;}
 </style>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/jobapp-style.css" />
 </head>
 <body>
-
-<c:url var="homepage" value="../applicant/getHomePage">
+<header>
+		<h1>Welcome to job portal</h1>
+	</header>
+	<div id="profilehead">
+	<c:url var="homepage" value="../applicant/getHomePage">
 		<c:param name="appId" value="${id}" />
 		<c:param name="firstname" value="${firstname}" />
 	</c:url>
-	<a href="${homepage}">Home page</a> <a href="../applicant/logout">Logout</a>
-	<p>Provide your details below.</p>
+	<a href="${homepage}">Home page</a>
+	<a href="../applicant/logout">Logout</a>
+	</div>
+	<div id="profile">
+	<h3>Provide your details below.</h3>
+	</div>
 	<form:form action="updateProfile" modelAttribute="applicant" method="POST">
-	<!--  associate data with applicant id -->
-	<form:hidden path="id"/>
+		<form:hidden path="id" />
 		<p class="success">${appmessage}</p>
 		<table>
 			<tbody>
@@ -26,11 +35,13 @@ p.invisible {visibility:hidden;}
 					<td><input type="submit" value="Update Profile" class="save"></td>
 				</tr>
 				<tr>
-					<td><form:input type="hidden" path="username" value="${userName}"/></td>
+					<td><form:input type="hidden" path="username"
+							value="${userName}" /></td>
 				</tr>
 				<tr>
-					<td><form:input type="hidden" path="user.id" value="${userId}"/></td>
+					<td><form:input type="hidden" path="user.id" value="${userId}" /></td>
 				</tr>
+				<tr><td><b>Personal details</b></td></tr>
 				<tr>
 					<td><label>First name:</label></td>
 					<td><form:input path="firstName" /></td>
@@ -47,7 +58,7 @@ p.invisible {visibility:hidden;}
 				<tr>
 					<td><label>Phone number:</label></td>
 					<td><form:input path="phone" /></td>
-					<td><form:errors path="" cssClass="error" /></td>
+					<td><form:errors path="phone" cssClass="error" /></td>
 				</tr>
 				<tr>
 					<td><label>Address Line 1:</label></td>
@@ -70,9 +81,10 @@ p.invisible {visibility:hidden;}
 					<td><form:input path="zip" /></td>
 				</tr>
 				<tr>
-					<td><label>Address Line 2:</label></td>
+					<td><label>Country:</label></td>
 					<td><form:input path="country" /></td>
 				</tr>
+				<tr><td><b>Education details</b></td></tr>
 				<tr>
 					<td><label>Institution:</label></td>
 					<td><form:input path="institution" /></td>
@@ -85,6 +97,7 @@ p.invisible {visibility:hidden;}
 					<td><label>Major:</label></td>
 					<td><form:input path="major" /></td>
 				</tr>
+				<tr><td><b>Experience</b></td></tr>
 				<tr>
 					<td><label>Company:</label></td>
 					<td><form:input path="company" /></td>

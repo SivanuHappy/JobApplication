@@ -1,0 +1,147 @@
+@CHARSET "ISO-8859-1";
+html, body{
+	margin-left:15px; margin-right:15px; 
+	padding:0px; 
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+header, footer {
+    padding: 1em;
+    background-color: #72B752;
+    clear: left;
+    text-align: center;
+}
+
+.lcolumn {
+	height: 150px;
+	width: 50%;
+	float: left;
+	border: 2px solid #CDCDCD;
+    border-radius: 8px;
+}
+
+.rcolumn {
+	height: 150px;
+	width: 48%;
+	float: right;
+	border: 2px solid #CDCDCD;
+    border-radius: 8px;
+}
+
+#header h2 {background-color: #ACDFF4;}
+.lcolumn {background-color: #FFFFFF;}
+.rcolumn {background-color: #FFFFFF;}
+
+form {
+	margin-top: 10px;
+}
+
+input {
+	width: 250px;
+	border: 1px solid #666; 
+	border-radius: 5px; 
+	padding: 4px; 
+	margin-left: 20px;
+	font-size: 16px;
+}
+
+textarea {
+	width: 250px;
+	border: 1px solid #666; 
+	border-radius: 5px; 
+	padding: 4px; 
+	margin-left: 80px;
+	font-size: 16px;
+}
+
+select {
+	width: 150px;
+	border: 1px solid #666; 
+	border-radius: 5px; 
+	padding: 4px; 
+	margin-left: 80px;
+	font-size: 16px;
+}
+
+.save {
+	font-weight: bold;
+	width: 130px; 
+	padding: 5px 10px; 
+	margin-top: 30px;
+	background: #cccccc;
+}
+
+#button1 {
+	width: 130px;
+	border: 1px solid #666; 
+	border-radius: 5px; 
+	padding: 4px; 
+	margin-left: 20px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.jobs {
+	font-weight: bold;
+	width: 130px;
+	padding: 5px 10px;
+	background: #cccccc;
+	margin-left: 10px;
+}
+
+table {   
+	border-style:none;
+	width:80%;
+}
+ 
+th {
+	border-bottom:1px solid gray;
+	background:none repeat scroll 0 0 #09c332;
+	padding:10px;
+	color: #FFFFFF;
+}
+
+tr {
+	border-style:none;
+	text-align:left;
+}
+
+tr:nth-child(even) {background: #FFFFFF}
+tr:nth-child(odd) {background: #FFFFFF}
+
+label {
+	font-size: 16px; 
+	display: block; 
+	text-align: left;  
+	width: 250px; 
+	margin-left: 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+
+.error {
+	font-style: italic; 
+	color: red
+}
+
+.success {
+	font-style: italic; 
+	color: green
+}
+
+p {
+ font-style: italic; 
+ color: red;
+}
+
+#profilehead {
+	border: 1px solid #666; 
+	border-radius: 5px; 
+	padding: 4px;
+	background-color: #ACDFF4;
+}
+
+#header h3 {background-color: #ACDFF4;}
+#searchjobs h3 {margin-left: 80px;}
+#jobdetails h2{align: left;}

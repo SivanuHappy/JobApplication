@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.jobapplication.validation.EmailValid;
+import com.jobapplication.validation.PhoneValid;
+
 @Entity
 @Table(name = "employer")
 public class Employer {
@@ -41,9 +44,11 @@ public class Employer {
 	private String lastName;
 
 	@Column(name = "email")
+	@EmailValid(message="Invalid email address")
 	private String email;
 
 	@Column(name = "phone")
+	@PhoneValid(message="Invalid phone number")
 	private String phone;
 
 	@Column(name = "company")
@@ -123,7 +128,6 @@ public class Employer {
 	public String getPosition() {
 		return position;
 	}
-
 
 	public void setPosition(String position) {
 		this.position = position;

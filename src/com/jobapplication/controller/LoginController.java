@@ -1,3 +1,8 @@
+/*
+ * This controller handles existing user login
+ * Author: Karishma
+ */
+
 package com.jobapplication.controller;
 
 
@@ -23,7 +28,7 @@ public class LoginController {
 
 	@GetMapping("/showFormForLogin")
 	public String showFormForLogin(ModelMap theModel) {
-		//create model attribute to bind form data
+		//This method renders model to view
 		User theUser = new User();
 		theModel.addAttribute("user",theUser);
 		return "login-form";
@@ -31,26 +36,27 @@ public class LoginController {
 
 	@PostMapping("/loginUser")
 	public ModelAndView loginUser(@ModelAttribute("user") User theUser) {
+		/*
+		 * This method checks for valid user
+		 * Then based on role redirects to corresponding home page
+		 */
 		ModelAndView mav = null;
 		boolean validUser = userService.validUser(theUser);
 		if (validUser) {
 			User user = userService.getUserByUserName(theUser);
 			if(user.getRole().equals("Applicant")) {
-			mav = new ModelAndView("homepage-applicant");
-		    int appId = userService.getUser(user.getId());
-		   // System.out.println("I am from login controller printing applicant id " + appId);
-			mav.addObject("firstname", user.getFirstName());
-			mav.addObject("id", appId);
+				mav = new ModelAndView("homepage-applicant");
+				int appId = userService.getUser(user.getId());
+				mav.addObject("firstname", user.getFirstName());
+				mav.addObject("id", appId);
 			}
 			else {
-			mav = new ModelAndView("homepage-employer");
-		    int empId = userService.getUser(user.getId());
-		    //System.out.println("I am from login controller printing employee id " + empId);
-			mav.addObject("firstname", user.getFirstName());
-			mav.addObject("id", empId);
+				mav = new ModelAndView("homepage-employer");
+				int empId = userService.getUser(user.getId());
+				mav.addObject("firstname", user.getFirstName());
+				mav.addObject("id", empId);
 			}
 		} else {
-
 			mav = new ModelAndView("login-form");
 			mav.addObject("message", "Username or Password is wrong!!");
 		}

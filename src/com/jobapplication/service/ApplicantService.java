@@ -14,6 +14,6 @@ public interface ApplicantService {
 
 	public List<Job> getByJobId(int theId);
 
-	public void updateApplicant(Applicant theApplicant);
+	public boolean updateApplicant(Applicant theApplicant);
 	
 }

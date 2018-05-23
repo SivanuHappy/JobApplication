@@ -9,9 +9,9 @@ public interface EmployerService {
 
 	public Employer getUser(int userId);
 
-	public void updateEmployer(Employer theEmployer);
+	public boolean updateEmployer(Employer theEmployer);
 
-	public void saveJob(Job theJob);
+	public boolean saveJob(Job theJob);
 
 	public List<Job> getJobs(int theId);
 	

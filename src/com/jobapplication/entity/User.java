@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 import com.jobapplication.validation.PasswordMatch;
 
-@PasswordMatch(message="Password doesn't match")
+@PasswordMatch(message="Password does not match")
 @Entity
 @Table(name="user")
 public class User {

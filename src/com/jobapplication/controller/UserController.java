@@ -1,5 +1,8 @@
+/*
+ * This controller handles new user registration
+ * Author: Anusha
+ */
 package com.jobapplication.controller;
-
 
 import javax.validation.Valid;
 
@@ -20,13 +23,13 @@ import com.jobapplication.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
-	// need to inject the user service
+	// Injecting the user service
 	@Autowired
 	private UserService userService;
 
 	@GetMapping("/showFormForRegister")
 	public String showFormForRegister(ModelMap theModel) {
-		// create model attribute to bind form data
+		//This method renders model to view
 		User theUser = new User();
 		theModel.addAttribute("user", theUser);
 		return "register-form";
@@ -34,10 +37,13 @@ public class UserController {
 
 	@PostMapping("/registerUser")
 	public ModelAndView registerUser(@ModelAttribute("user") @Valid User theUser, BindingResult theBindingResult) {
+		/*
+		 * This method checks for user name existence
+		 * Based on role of the user redirects to corresponding home page
+		 */
 		ModelAndView mav = null;
 		boolean checkUser;
 		checkUser = userService.checkUserNameExists(theUser);
-		System.out.println(checkUser);
 		if (theBindingResult.hasErrors()) {
 			mav = new ModelAndView("register-form");
 		}
@@ -59,7 +65,8 @@ public class UserController {
 					mav.addObject("firstname", theUser.getFirstName());
 					mav.addObject("id", appId);
 				}
-			} else {
+			} 
+			else {
 				mav = new ModelAndView("register-form");
 				mav.addObject("message", "Username already exists!!");
 			}

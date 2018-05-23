@@ -1,5 +1,6 @@
 package com.jobapplication.entity;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import com.jobapplication.validation.SalaryValid;
 
 @Entity
 @Table(name = "job")
@@ -20,21 +24,27 @@ public class Job {
 	private int id;
 
 	@Column(name = "title")
+	@NotEmpty(message="Mandatory field")
 	private String title;
 
 	@Column(name = "company")
+	@NotEmpty(message="Mandatory field")
 	private String company;
 
 	@Column(name = "salary")
-	private int salary;
+	@SalaryValid(message = "Salary cannot be 0 or greater than $9,999,999.99")
+	private String salary;
 
 	@Column(name = "skills")
+	@NotEmpty(message="Mandatory field")
 	private String skills;
 
 	@Column(name = "city")
+	@NotEmpty(message="Mandatory field")
 	private String city;
 
 	@Column(name = "state")
+	@NotEmpty(message="Mandatory field")
 	private String state;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -85,14 +95,6 @@ public class Job {
 		this.state = state;
 	}
 
-	public int getSalary() {
-		return salary;
-	}
-
-	public void setSalary(int salary) {
-		this.salary = salary;
-	}
-
 	public String getSkills() {
 		return skills;
 	}
@@ -109,7 +111,15 @@ public class Job {
 		this.employer = employer;
 	}
 
-	public Job(String title, String company, int salary, String skills, String city, String state) {
+	public String getSalary() {
+		return salary;
+	}
+
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+
+	public Job(String title, String company, String salary, String skills, String city, String state) {
 		this.title = title;
 		this.company = company;
 		this.salary = salary;

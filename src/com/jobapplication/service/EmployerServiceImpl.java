@@ -25,14 +25,14 @@ public class EmployerServiceImpl implements EmployerService {
 
 	@Override
 	@Transactional
-	public void updateEmployer(Employer theEmployer) {
-		employerDAO.updateEmployer(theEmployer);
+	public boolean updateEmployer(Employer theEmployer) {
+		return employerDAO.updateEmployer(theEmployer);
 	}
 
 	@Override
 	@Transactional
-	public void saveJob(Job theJob) {
-		employerDAO.saveJob(theJob);	
+	public boolean saveJob(Job theJob) {
+		return employerDAO.saveJob(theJob);	
 	}
 
 	@Override

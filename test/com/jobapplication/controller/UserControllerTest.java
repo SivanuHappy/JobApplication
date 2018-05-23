@@ -1,3 +1,7 @@
+/*
+ * JUnit test to check public methods in User Controller
+ * Author: Anusha, Shweta, Karishma, Xue
+ */
 package com.jobapplication.controller;
 
 import static org.junit.Assert.*;
@@ -13,9 +17,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.jobapplication.entity.User;
 import com.jobapplication.service.UserService;
 import com.jobapplication.controller.UserController;
@@ -23,84 +24,56 @@ import com.jobapplication.controller.UserController;
 public class UserControllerTest {
 	private UserController userController;
 	private UserService userService;
-	private User user;
-	private final int id = 1;
+	private User newUser;
+	private final int userId = 1;
 	BindingResult theBindingResult;
 	ModelMap theModel;
 	ModelAndView mav;
 
 	@Before
 	public void setup() {
-		
 		userController = mock(UserController.class);
 		userService = mock(UserService.class);
-		user = mock(User.class);
 		theModel = new ExtendedModelMap();
 	}
 
 	@Test
 	public void testShowFormForRegister() throws Exception {
+		//This test method checks whether an user object renders to view page
 		User user = new User();
-		//Setting up mock environment
 		when(userController.showFormForRegister(theModel)).thenReturn("register-form");
-		//Calling method in controller
 		String viewName = userController.showFormForRegister(theModel);
 		theModel.addAttribute(user);
-		// verify view page name
 		Assert.assertNotNull(viewName);
 		Assert.assertEquals("register-form", viewName);
-		// verify user object
 		User actualUser = (User) theModel.get("user");
 		Assert.assertEquals(user, actualUser);
 	}
 
-	/* Not needed for now */
-	/*@Test
-	public void testListUsers() throws Exception {
-		// Mock data
-		User newUser1 = new User("us", "fq", "f2", "Applicant", "123456", "123456");
-		User newUser2 = new User("is", "ggq", "df2", "Applicant", "123456", "123456");
-		// Setting up mock environment
-		when(userController.listUsers(theModel)).thenReturn("list-users");
-		when(userService.getUsers()).thenReturn(Arrays.asList(newUser1, newUser2));
-		// Calling method in controller and service
-		String listUsers = userController.listUsers(theModel);
-		List<User> theUsers = userService.getUsers();
-		// Assert view page
-		assertNotNull(listUsers);
-		Assert.assertEquals("list-users", listUsers);
-		// Assert model
-		theModel.addAttribute(theUsers);
-		assertEquals(2, theUsers.size());
-		assertNotNull(theUsers);
-		assertEquals(Arrays.asList(newUser1, newUser2), theUsers);
-	}*/
 
-	/* Test case for registering valid applicant user
-	 * check checkUserNameExists, saveUser, getUser, and finally model
-	 */
 	@Test
 	public void testRegisterValidApplicant() throws Exception {
-		// Mock data
-		User newUser1 = new User("John123", "John", "Doe", "Applicant", "123456", "123456");
-        newUser1.setId(id);
+		/* Test case for registering valid applicant user
+		 * check checkUserNameExists, saveUser, getUser, and model
+		 */
+		newUser = new User("John123", "John", "Doe", "Applicant", "123456", "123456");
+        newUser.setId(userId);
         
-        when(userController.registerUser(newUser1, theBindingResult)).thenReturn(mav);
-		when(userService.checkUserNameExists(newUser1)).thenReturn(true);
-		when(userService.saveUser(newUser1)).thenReturn("Applicant");
-		when(userService.getUser(1)).thenReturn(2);
+        when(userController.registerUser(newUser, theBindingResult)).thenReturn(mav);
+		when(userService.checkUserNameExists(newUser)).thenReturn(true);
+		when(userService.saveUser(newUser)).thenReturn("Applicant");
+		when(userService.getUser(newUser.getId())).thenReturn(1);
 		
-		ModelAndView mav = userController.registerUser(newUser1, theBindingResult);
+		ModelAndView mav = userController.registerUser(newUser, theBindingResult);
 
-		boolean checkUser = userService.checkUserNameExists(newUser1);
-		assertEquals(true, checkUser);
-		//assertFalse(checkUser);
+		boolean checkUser = userService.checkUserNameExists(newUser);
+		assertTrue(checkUser);
 
-		String classname = userService.saveUser(newUser1);
+		String classname = userService.saveUser(newUser);
 		assertEquals("Applicant", classname);
 	    
-		int empId = userService.getUser(id);
-		assertEquals(2, empId);
+		int appId = userService.getUser(newUser.getId());
+		assertEquals(1, appId);
 		
 		mav = new ModelAndView("homepage-applicant");
 		assertEquals("homepage-applicant", mav.getViewName());
@@ -108,37 +81,25 @@ public class UserControllerTest {
 		mav.addObject("successmessage", "You registered successfully!!");
 		assertEquals("You registered successfully!!", mav.getModel().get("successmessage"));
 		
-		mav.addObject("firstname", newUser1.getFirstName());
+		mav.addObject("firstname", newUser.getFirstName());
         assertEquals("John", mav.getModel().get("firstname"));
         
-        mav.addObject("id", empId);
-        assertEquals(2, mav.getModel().get("id"));
+        mav.addObject("id", appId);
+        assertEquals(1, mav.getModel().get("id"));
         assertNotNull(mav);
 	}
 
 	@Test
 	public void testRegisterInvalidApplicant() throws Exception {
-		// Mock data with same username
-		User newUser1 = new User("John123", "John", "Doe", "Applicant", "123456", "123456");
-		User newUser2 = new User("John123", "John", "Abel", "Applicant", "123456", "123456");
+		// Test case to check whether registration fails for invalid applicant user
+		newUser = new User("John123", "John", "Abel", "Applicant", "123456", "123456");
 		
-		// Setting up mock environment
-	    when(userController.registerUser(newUser1, theBindingResult)).thenReturn(mav);
-		when(userService.checkUserNameExists(newUser1)).thenReturn(true);
-		when(userService.saveUser(newUser1)).thenReturn("Applicant");
+	    when(userController.registerUser(newUser, theBindingResult)).thenReturn(mav);
+		when(userService.checkUserNameExists(newUser)).thenReturn(false);
 		
-		
-        ModelAndView mav1 = userController.registerUser(newUser1, theBindingResult);
-        boolean checkUser1 = userService.checkUserNameExists(newUser1);
-        String className1 = userService.saveUser(newUser1);
-		
-	    when(userController.registerUser(newUser2, theBindingResult)).thenReturn(mav);
-		when(userService.checkUserNameExists(newUser2)).thenReturn(false);
-        //Assert to check username availability
-		
-        ModelAndView mav2 = userController.registerUser(newUser2, theBindingResult);
-        assertFalse(userService.checkUserNameExists(newUser2));
-        
+        ModelAndView mav = userController.registerUser(newUser, theBindingResult);
+        assertFalse(userService.checkUserNameExists(newUser));
+      
         mav = new ModelAndView("register-form");
         assertEquals("register-form", mav.getViewName());
         
@@ -148,26 +109,26 @@ public class UserControllerTest {
 
 	@Test
 	public void testRegisterValidEmployer() throws Exception {
-		// Mock data
-		User newUser1 = new User("James123", "James", "Darner", "Employer", "123456", "123456");
-        newUser1.setId(id);
-        
-        when(userController.registerUser(newUser1, theBindingResult)).thenReturn(mav);
-		when(userService.checkUserNameExists(newUser1)).thenReturn(true);
-		when(userService.saveUser(newUser1)).thenReturn("Employer");
-		when(userService.getUser(1)).thenReturn(3);
-		
-		ModelAndView mav = userController.registerUser(newUser1, theBindingResult);
+		// Test case to check registration for valid employer
+		newUser = new User("James123", "James", "Darner", "Employer", "123456", "123456");
+        newUser.setId(userId);
 
-		boolean checkUser = userService.checkUserNameExists(newUser1);
+        when(userController.registerUser(newUser, theBindingResult)).thenReturn(mav);
+		when(userService.checkUserNameExists(newUser)).thenReturn(true);
+		when(userService.saveUser(newUser)).thenReturn("Employer");
+		when(userService.getUser(newUser.getId())).thenReturn(1);
+		
+		ModelAndView mav = userController.registerUser(newUser, theBindingResult);
+
+		boolean checkUser = userService.checkUserNameExists(newUser);
 		assertEquals(true, checkUser);
 		//assertFalse(checkUser);
 
-		String classname = userService.saveUser(newUser1);
+		String classname = userService.saveUser(newUser);
 		assertEquals("Employer", classname);
 	    
-		int empId = userService.getUser(id);
-		assertEquals(3, empId);
+		int empId = userService.getUser(newUser.getId());
+		assertEquals(1, empId);
 		
 		mav = new ModelAndView("homepage-employer");
 		assertEquals("homepage-employer", mav.getViewName());
@@ -175,37 +136,24 @@ public class UserControllerTest {
 		mav.addObject("successmessage", "You registered successfully!!");
 		assertEquals("You registered successfully!!", mav.getModel().get("successmessage"));
 		
-		mav.addObject("firstname", newUser1.getFirstName());
+		mav.addObject("firstname", newUser.getFirstName());
         assertEquals("James", mav.getModel().get("firstname"));
         
         mav.addObject("id", empId);
-        assertEquals(3, mav.getModel().get("id"));
+        assertEquals(1, mav.getModel().get("id"));
         assertNotNull(mav);
-		
 	}
 	
 	@Test
 	public void testRegisterInvalidEmployer() throws Exception {
-		// Mock data with same username
-		User newUser1 = new User("James123", "James", "Darner", "Employer", "123456", "123456");
-		User newUser2 = new User("James123", "James", "Abel", "Employer", "123456", "123456");
+		// Test case to check whether registration fails for invalid employer user
+		newUser = new User("James123", "James", "Abel", "Employer", "123456", "123456");
 		
-		// Setting up mock environment
-	    when(userController.registerUser(newUser1, theBindingResult)).thenReturn(mav);
-		when(userService.checkUserNameExists(newUser1)).thenReturn(true);
-		when(userService.saveUser(newUser1)).thenReturn("Employer");
+	    when(userController.registerUser(newUser, theBindingResult)).thenReturn(mav);
+		when(userService.checkUserNameExists(newUser)).thenReturn(false);
 		
-		
-        ModelAndView mav1 = userController.registerUser(newUser1, theBindingResult);
-        boolean checkUser1 = userService.checkUserNameExists(newUser1);
-        String className1 = userService.saveUser(newUser1);
-		
-	    when(userController.registerUser(newUser2, theBindingResult)).thenReturn(mav);
-		when(userService.checkUserNameExists(newUser2)).thenReturn(false);
-        //Assert to check username availability
-		
-        ModelAndView mav2 = userController.registerUser(newUser2, theBindingResult);
-        assertFalse(userService.checkUserNameExists(newUser2));
+        ModelAndView mav = userController.registerUser(newUser, theBindingResult);
+        assertFalse(userService.checkUserNameExists(newUser));
 		
         mav = new ModelAndView("register-form");
         assertEquals("register-form", mav.getViewName());

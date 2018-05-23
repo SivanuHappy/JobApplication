@@ -1,23 +1,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html.
+<!DOCTYPE html>
 <html>
 <head>
 <title>Login page</title>
 <style>
-.error {
-	color: red
-}
-p{
- font-style: italic; 
- color: red;
-}
 </style>
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/add-customer-style.css" />
+	href="${pageContext.request.contextPath}/resources/css/jobapp-style.css"/>
 </head>
 <body>
+<header>
+   <h1>Welcome to job portal</h1>
+</header>
 	<div id="wrapper">
 		<div id="header">
 			<h2>Registered applicant/employer? Login here</h2>

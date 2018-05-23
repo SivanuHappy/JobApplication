@@ -19,7 +19,7 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	@GetMapping("/")
 	public String showFormForRegister(ModelMap theModel) {
 		// create model attribute to bind form data
@@ -27,7 +27,7 @@ public class AdminController {
 		theModel.addAttribute("admin", theAdmin);
 		return "admin-form";
 	}
-	
+
 	@PostMapping("/loginAdmin")
 	public ModelAndView loginAdmin(@ModelAttribute("admin") Admin theAdmin, BindingResult theBindingResult) {
 		ModelAndView mav = null;

@@ -72,7 +72,7 @@ CREATE TABLE `job` (
   `title` varchar(45) DEFAULT NULL,
   `company` varchar(45) DEFAULT NULL,
   `skills` varchar(45) DEFAULT NULL,
-  `salary` int(45) DEFAULT NULL,
+  `salary` varchar(10) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `state` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -81,6 +81,7 @@ CREATE TABLE `job` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 drop table `admin`;
+
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,

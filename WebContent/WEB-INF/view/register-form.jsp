@@ -4,22 +4,17 @@
 <head>
 <title>Registration page</title>
 <style>
-.error {
-	color: red
-}
-.success {
-	color: green
-}
 </style>
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/add-customer-style.css" />
+	href="${pageContext.request.contextPath}/resources/css/jobapp-style.css"/>
 </head>
 <body>
+<header>
+   <h1>Welcome to job portal</h1>
+</header>
 	<div id="wrapper">
 		<div id="header">
-			<h2>New applicant/employer? Register here</h2>
+			<h2 align="center">New applicant/employer? Register here</h2>
 		</div>
 	</div>
 	<div id="container">

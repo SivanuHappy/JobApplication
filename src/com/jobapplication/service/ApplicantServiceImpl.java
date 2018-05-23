@@ -37,8 +37,8 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Override
 	@Transactional
-	public void updateApplicant(Applicant theApplicant) {
-		applicantDAO.updateApplicant(theApplicant);
+	public boolean updateApplicant(Applicant theApplicant) {
+		return applicantDAO.updateApplicant(theApplicant);
 	}
 
 }

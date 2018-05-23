@@ -1,7 +1,10 @@
+/*
+ * This controller handles registered employer functionalities like profile management and posting jobs
+ * Author: Anusha, Shweta
+ */
 package com.jobapplication.dao;
 
 import java.util.List;
-import javax.validation.Valid;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -20,24 +23,18 @@ public class EmployerDAOImpl implements EmployerDAO {
 
 	@Override
 	public Employer getUser(int empId) {
-		//get the current Hibernate session
+		// This method will retrieve the employer object by employee id
 		Session currentSession = sessionFactory.getCurrentSession();
-		//System.out.println("user id from get user method: " + userId);
-		//now retrieve record from database using primary key
-		//Query<User> userQuery = currentSession.createQuery("from User where id = :id", User.class);
-		//userQuery.setParameter("id", userId);
-		//User user = userQuery.list().get(0);
 		Query<Employer> theQuery = currentSession.createQuery("from Employer where id = :id",Employer.class);
 		theQuery.setParameter("id", empId);
 		List<Employer> employer = theQuery.list();
-		System.out.println("from get method Employer details: " + employer.get(0));
 		return employer.get(0);
 	}
 
 	@Override
-	public void updateEmployer(Employer theEmployer) {
-		System.out.println(theEmployer);
-		//get the current Hibernate session
+	public boolean updateEmployer(Employer theEmployer) {
+		//This method is used to update the Employee information
+		boolean success = false;
 		Session currentSession = sessionFactory.getCurrentSession();
 		User user = currentSession.get(User.class, theEmployer.getUser().getId());
 		Query<Job> theQuery = currentSession.createQuery("from Job where employer = :employer",Job.class);
@@ -45,31 +42,39 @@ public class EmployerDAOImpl implements EmployerDAO {
 		List<Job> theJob = theQuery.list();
 		theEmployer.setUser(user);
 		theEmployer.setJobs(theJob);
+		try {
 		currentSession.saveOrUpdate(theEmployer);
+		success = true; 
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		return success;
 	}
 
 	@Override
-	public void saveJob(Job theJob) {
+	public boolean saveJob(Job theJob) {
+		// This method allows the employer to create and save new jobs
+		boolean success = true;
 		Session currentSession = sessionFactory.getCurrentSession();
 		Employer employer = currentSession.get(Employer.class, theJob.getEmployer().getId());
 		employer.addJobs(theJob);
-		System.out.println(employer.getUsername());
+		try {
 		currentSession.save(employer);
+		success = true;
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		return success;
 	}
 
 	@Override
 	public List<Job> getJobs(int theId) {
-		//get the current Hibernate session
+		//This method will list all the jobs created by the employer
 		Session currentSession = sessionFactory.getCurrentSession();
-		/*Query<Employer> theQuery = currentSession.createQuery("from Employer where id= :id", Employer.class);
-		theQuery.setParameter("id", theId);
-		List<Employer> employer = theQuery.list();
-		//int empId = employer.get(0).getId();
-		System.out.println("the employee id: " + empId + " " + "the user id is "+ " " + theId);*/
 		Query<Job> jobQuery = currentSession.createQuery("from Job where employerid= :employerid", Job.class);
-		System.out.println("I am getJobs list: " + theId);
 		jobQuery.setParameter("employerid", theId);
-		//execute query and get result list
 		List<Job> jobs = jobQuery.getResultList();
 		return jobs;
 	}

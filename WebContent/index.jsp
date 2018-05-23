@@ -1,63 +1,10 @@
 <html>
 <head>
-<title>Home Page</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Index Page</title>
 <style>
-/* Create two equal columns that floats next to each other */
-html, body{
-	margin-left:15px; margin-right:15px; 
-	padding:0px; 
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-}
-.lcolumn {
-	height: 150px;
-	width: 50%;
-	float: left;
-	border: 2px solid #CDCDCD;
-    border-radius: 8px;
-}
-.rcolumn {
-	height: 150px;
-	width: 49.1%;
-	float: right;
-	border: 2px solid #CDCDCD;
-    border-radius: 8px;
-}
-header, footer {
-    padding: 1em;
-    background-color: #72B752;
-    clear: left;
-    text-align: center;
-}
-.save {
-	font-weight: bold;
-	width: 130px; 
-	padding: 5px 10px; 
-	margin-top: 30px;
-	background: #cccccc;
-}
-input {
-	width: 250px;
-	border: 1px solid #666; 
-	border-radius: 5px; 
-	padding: 4px; 
-	margin-left: 80px;
-	font-size: 16px;
-}
-label {
-	font-size: 16px; 
-	width: 100px; 
-	display: block; 
-	text-align: right;
-	margin-left: 10px;
-	margin-top: 8px;
-	margin-bottom: 8px;
-}
-#header h2 {background-color: #ACDFF4;}
-.lcolumn {background-color: #FFFFFF;}
-.rcolumn {background-color: #FFFFFF;}
-
 </style>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/jobapp-style.css"/>
 </head>
 <body>
 <header>

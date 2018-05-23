@@ -5,22 +5,25 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.jobapplication.entity.Applicant;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
-public class PhoneValidValidator implements ConstraintValidator<PhoneValid, Object> {
+import com.jobapplication.entity.Applicant;
+import com.jobapplication.entity.Employer;
+
+public class PhoneValidValidator implements ConstraintValidator<PhoneValid, String> {
 
 	@Override
-	public void initialize(PhoneValid constraintAnnotation) {
+	public void initialize(PhoneValid thePhoneValid) {
 	}
 
 	@Override
-	public boolean isValid(Object phone, ConstraintValidatorContext context) {
-		Applicant app = (Applicant) phone;
+	public boolean isValid(String phone, ConstraintValidatorContext context) {
 		boolean result = true;
-		if(app.getPhone() != null){
+		System.out.println(phone);
+		if(phone != null){
 		Pattern pattern = Pattern.compile("^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$",
 				Pattern.CASE_INSENSITIVE);
-		result = pattern.matcher(app.getPhone()).matches();
+		result = pattern.matcher(phone).matches();
 		}
 		return result;
 	}

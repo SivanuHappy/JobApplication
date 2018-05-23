@@ -1,3 +1,7 @@
+/*
+ * This controller handles registered employer functionalities like profile management and posting jobs
+ * Author: Anusha, Xue
+ */
 package com.jobapplication.dao;
 
 import java.util.List;
@@ -22,52 +26,48 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 
 	@Override
 	public Applicant getUser(int appId) {
-		//get the current Hibernate session
+		//This method retrieves the applicant information using applicant id
 		Session currentSession = sessionFactory.getCurrentSession();
-		//System.out.println("user id from get user method: " + userId);
-		//now retrieve record from database using primary key
-		//Query<User> userQuery = currentSession.createQuery("from User where id = :id", User.class);
-		//userQuery.setParameter("id", userId);
-		//User user = userQuery.list().get(0);
 		Query<Applicant> theQuery = currentSession.createQuery("from Applicant where id = :id",Applicant.class);
 		theQuery.setParameter("id", appId);
 		List<Applicant> applicant = theQuery.list();
-		System.out.println("from get method applicant details: " + applicant.get(0));
 		return applicant.get(0);
 	}
 
 	@Override
 	public List<Job> searchByJobString(String searchString) {
+		//This methold will allow the applicant to search for jobs
 		Session currentSession = sessionFactory.getCurrentSession();
 		Criteria cr = currentSession.createCriteria(Job.class);
-		System.out.println(searchString);
 		cr.add(Restrictions.ilike("title", searchString));
-		//System.out.println(cr.list());	
 		List<Job> theJobs = cr.list();
-		//System.out.println(cr.list());
 		return theJobs;
 	}
 
 	@Override
 	public List<Job> getByJobId(int theId) {
+		//This method lists the jobs based on the search criteria
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<Job> jobQuery = currentSession.createQuery("from Job where id= :id", Job.class);
-		//System.out.println("I am getJobs list: " + theId);
 		jobQuery.setParameter("id", theId);
-		//execute query and get result list
 		List<Job> jobs = jobQuery.getResultList();
 		return jobs;
 	}
 
 	@Override
-	public void updateApplicant(Applicant theApplicant) {
-		//get the current Hibernate session
-		System.out.println(theApplicant);
-				Session currentSession = sessionFactory.getCurrentSession();
-				System.out.println(theApplicant.getUser().getId());
-				User user = currentSession.get(User.class, theApplicant.getUser().getId());
-				System.out.println(user);
-				theApplicant.setUser(user);
-				currentSession.saveOrUpdate(theApplicant);
+	public boolean updateApplicant(Applicant theApplicant) {
+		//This method allows the applicant to update the profile
+		boolean updateSuccess = false;
+		Session currentSession = sessionFactory.getCurrentSession();
+		User user = currentSession.get(User.class, theApplicant.getUser().getId());
+		theApplicant.setUser(user);
+		try {
+		currentSession.saveOrUpdate(theApplicant);
+		updateSuccess = true;
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		return updateSuccess;
 	}
 }

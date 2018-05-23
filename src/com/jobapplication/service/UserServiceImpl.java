@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jobapplication.dao.UserDAO;
-import com.jobapplication.entity.Employer;
 import com.jobapplication.entity.User;
 
 @Service
